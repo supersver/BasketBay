@@ -1,10 +1,20 @@
-function App({ children }: { children: React.ReactNode }) {
+import { StrictMode } from "react";
+import { AppRoutes } from "./routes";
+import { AppProvider } from "./providers/AppProvider";
+import { AppContextProvider } from "./context/AppContext";
+
+function App({ children }: { children?: React.ReactNode }) {
+  if (children) {
+    return <>{children}</>;
+  }
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <h1 className="text-4xl font-bold text-green-600">
-        Welcome to BasketBay 🛒
-      </h1>
-    </div>
+    <StrictMode>
+      <AppProvider>
+        <AppContextProvider>
+          <AppRoutes />
+        </AppContextProvider>
+      </AppProvider>
+    </StrictMode>
   );
 }
 

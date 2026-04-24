@@ -1,6 +1,15 @@
 const storagePrefix = "basketbay_";
 
 const storage = {
+  getAccessToken: (): string | null => {
+    return localStorage.getItem(`${storagePrefix}accessToken`);
+  },
+  setAccessToken: (token: string) => {
+    localStorage.setItem(`${storagePrefix}accessToken`, token);
+  },
+  removeAccessToken: () => {
+    localStorage.removeItem(`${storagePrefix}accessToken`);
+  },
   setItem: (key: string, value: string) => {
     localStorage.setItem(`${storagePrefix}${key}`, value);
   },
