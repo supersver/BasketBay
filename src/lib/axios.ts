@@ -28,7 +28,7 @@ export const axios = Axios.create({
 axios.interceptors.request.use(authRequestInterceptor);
 axios.interceptors.response.use(
   (response) => {
-    return response.data;
+    return response;
   },
   (error) => {
     const status = error?.response?.status;
@@ -37,11 +37,8 @@ axios.interceptors.response.use(
       storage.removeAccessToken();
       window.location.assign(window.location.origin as unknown as string);
     } else if (status === 403) {
-      // console.log('403 Forbidden received for:', error?.config?.url);
-      // console.log(' Current pathname:', window.location.pathname);
-      // Don't redirect if already on not-authorized page
-      if (window.location.pathname !== "/not-authorized") {
-        window.location.assign("/not-authorized");
+      if (window.location.pathname !== "/") {
+        window.location.assign("/");
       }
     } else if (status === 422) {
       storage.removeAccessToken();
@@ -51,7 +48,7 @@ axios.interceptors.response.use(
         url: error?.config?.url,
         method: error?.config?.method,
         status,
-        response: error?.response?.data,
+        response: error?.response,
       });
       return Promise.reject(error);
     }

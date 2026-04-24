@@ -39,6 +39,18 @@ export const useLogin = (config = {}) => {
       if (data) {
         toast.success("Login successful!");
         storage.setAccessToken(data?.access_token);
+        const user =
+          data?.user ??
+          data?.data?.user ??
+          data?.profile ??
+          data?.data?.profile ??
+          data?.customer ??
+          data?.data?.customer;
+
+        if (user) {
+          storage.setItem("user", JSON.stringify(user));
+        }
+
         window.location.assign("/app");
       }
     },

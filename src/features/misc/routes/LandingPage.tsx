@@ -21,6 +21,7 @@ export const LandingPage = ({ children }: { children: React.ReactNode }) => {
       >
         Log In
       </Button>
+      {children}
     </div>
   );
 };

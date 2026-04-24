@@ -3,7 +3,6 @@ import { Outlet, useRoutes } from "react-router-dom";
 import { Suspense } from "react";
 import { AppContextProvider } from "@/context/AppContext";
 
-import App from "@/App";
 import { Spinner } from "phosphor-react";
 import storage from "@/utils/storage";
 import { protectedRoutes } from "./protected";
