@@ -2,22 +2,37 @@ import { useParams } from "react-router-dom";
 import { useGetProductById } from "../api/getProductById";
 import { ArrowLeft, ShoppingCartSimple, Spinner } from "phosphor-react";
 import { Button } from "@/components/Elements";
+import { useStoreCartItem } from "../hooks/useStoreCartItem";
+import { toast } from "react-toastify";
 
 export const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const productId = parseInt(id || "", 10);
+
   const { data: product, isLoading, error } = useGetProductById(productId);
 
-  {
-    isLoading && (
-      <div className="flex min-h-80 w-full items-center justify-center">
-        <Spinner size={32} className="animate-spin" />
-      </div>
-    );
+  const { addToCart } = useStoreCartItem();
+
+  if (isLoading) {
+    <div className="flex min-h-80 w-full items-center justify-center">
+      <Spinner size={32} className="animate-spin" />
+    </div>;
   }
-  {
-    error && <p>Error loading product: {error.message}</p>;
+
+  if (error) {
+    <p>Error loading product: {error.message}</p>;
   }
+
+  const isProductInCart = (productId: number) => {
+    const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
+    return cartItems.some((item: any) => item.id === productId);
+  };
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    addToCart(product);
+    toast.success("Item added to cart");
+  };
   return (
     <div>
       <Button
@@ -44,14 +59,21 @@ export const ProductDetail = () => {
               <span className="text-lg font-bold text-slate-950">
                 ${product.price.toFixed(2)}
               </span>
-              <button
-                type="button"
-                onClick={(e) => e.stopPropagation()}
-                className="flex h-10 shrink-0 items-center gap-2 rounded-md bg-slate-950 px-3 text-sm font-semibold text-white transition hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-100"
-              >
-                <ShoppingCartSimple size={18} />
-                <span className="hidden sm:inline">Add</span>
-              </button>
+              {isProductInCart(product.id) ? (
+                <span className="flex h-10 shrink-0 cursor-not-allowed items-center gap-2 rounded-md bg-gray-300 px-3 text-sm font-semibold text-gray-600">
+                  <ShoppingCartSimple size={18} />
+                  In Cart
+                </span>
+              ) : (
+                <button
+                  type="button"
+                  onClick={(e) => handleAddToCart(e)}
+                  className="flex h-10 shrink-0 items-center gap-2 rounded-md bg-slate-950 px-3 text-sm font-semibold text-white transition hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-100"
+                >
+                  <ShoppingCartSimple size={18} />
+                  <span className="hidden sm:inline">Add</span>
+                </button>
+              )}
             </div>
           </div>
         </div>
