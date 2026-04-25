@@ -19,6 +19,7 @@ export const login = async ({
     return res?.data;
   } catch (error: any) {
     console.error("Login error:", error);
+    throw error;
   }
 };
 

@@ -2,6 +2,7 @@ import { Button } from "@/components/Elements";
 import React, { useState } from "react";
 import { useLogin } from "../api/login";
 import storage from "@/utils/storage";
+import { toast } from "react-toastify";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -24,17 +25,22 @@ const LoginForm: React.FC = () => {
       {
         onSuccess: (data) => {
           setIsLoading(false);
-          storage.setAccessToken(data?.access_token);
           if (storage.getRedrictPath()) {
             const redirectPath = storage.getRedrictPath() as string;
             storage.setRedirectPath("");
             window.location.assign(redirectPath);
-          } else if (data?.access_token) {
+          }
+          if (data?.access_token) {
+            storage.setAccessToken(data?.access_token);
             window.location.assign("/app");
           }
         },
-        onError: (error) => {
-          console.error("Login failed:", error);
+        onError: (error: any) => {
+          if (error?.response?.data?.message) {
+            toast.error(error.response.data.message);
+          } else {
+            toast.error("Login failed. Please try again.");
+          }
           setIsLoading(false);
         },
       },

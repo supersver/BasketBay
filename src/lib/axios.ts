@@ -34,8 +34,8 @@ axios.interceptors.response.use(
     const status = error?.response?.status;
 
     if (status === 401) {
-      storage.removeAccessToken();
-      window.location.assign(window.location.origin as unknown as string);
+      // storage.removeAccessToken();
+      // window.location.assign(window.location.origin as unknown as string);
     } else if (status === 403) {
       if (window.location.pathname !== "/") {
         window.location.assign("/");
