@@ -45,13 +45,18 @@ export const ProductDetail = () => {
       </Button>
       {product && (
         <div className="lg:flex p-4 mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-          {product.images && product.images.length > 0 && (
-            <img
-              src={product.images[0]}
-              alt={product.title}
-              className="w-full max-w-md rounded-lg"
-            />
-          )}{" "}
+          <div className="flex gap-2 overflow-x-auto mb-4 lg:mb-0 lg:w-2/3">
+            {product.images &&
+              product.images.length > 0 &&
+              product?.images?.map((imgUrl, index) => (
+                <img
+                  key={index}
+                  src={imgUrl}
+                  alt={product.title}
+                  className="w-full h-64 object-cover rounded-lg mb-4 lg:mb-0 lg:w-full"
+                />
+              ))}
+          </div>
           <div className="p-4">
             <h1 className="text-2xl font-bold mb-2">{product.title}</h1>
             <p className="text-gray-700 mb-4">{product.description}</p>
