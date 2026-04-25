@@ -29,7 +29,7 @@ const LoginForm: React.FC = () => {
             const redirectPath = storage.getRedrictPath() as string;
             storage.setRedirectPath("");
             window.location.assign(redirectPath);
-          } else {
+          } else if (data?.access_token) {
             window.location.assign("/app");
           }
         },
