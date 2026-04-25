@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 
-import { Spinner } from "phosphor-react";
+import { SmileyXEyes, Spinner } from "phosphor-react";
 import { MainLayout } from "@/components/Layout/MainLayout";
 import { Products } from "@/features/products";
 import { lazyImport } from "@/utils/lazyImport";
@@ -49,7 +49,15 @@ export const protectedRoutes = [
       { path: "products/:id", element: <ProductDetailPage /> },
       { path: "profile", element: <UserProfilePage /> },
       { path: "cart", element: <Cart /> },
-      { path: "*", element: <div>404 Not Found</div> },
+      {
+        path: "*",
+        element: (
+          <div className="h-screen w-full flex flex-col items-center justify-center">
+            <SmileyXEyes size={100} className="text-gray-500" weight="fill" />
+            <h1 className="text-2xl font-bold">404 - Page Not Found</h1>
+          </div>
+        ),
+      },
     ],
   },
 ];

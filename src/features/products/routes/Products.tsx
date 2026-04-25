@@ -202,7 +202,7 @@ export const Products = () => {
         hasUnappliedChanges={hasUnappliedChanges}
       />
 
-      {isLoading ? (
+      {isLoading || isRefetching ? (
         <div className="flex min-h-80 items-center justify-center">
           <Spinner size={36} className="animate-spin text-emerald-600" />
         </div>

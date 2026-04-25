@@ -4,6 +4,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import { UserDropdown } from "../../features/user";
+import { useAppContext } from "@/context/AppContext";
 
 const navItems = [{ label: "Shop", to: "/app" }];
 
@@ -18,19 +19,30 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
 export const NavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
+  const { cartItems } = useAppContext();
+
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
       <nav className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-8">
-        <NavLink
-          to="/app"
+        <div
           className="flex shrink-0 items-center gap-2 text-slate-950"
           aria-label="BasketBay home"
         >
           <span className="flex h-10 w-10 items-center justify-center rounded-md bg-emerald-600 text-white">
             <ShoppingCart size={22} weight="fill" />
           </span>
-          <span className="text-lg font-bold sm:text-xl">BasketBay</span>
-        </NavLink>
+          <div className="flex-col items-start text-xs -space-y-1 leading-none flex">
+            <span className="text-lg font-bold sm:text-xl">BasketBay</span>
+            <a
+              className="text-xs"
+              href="https://github.com/supersver"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              By @supersver
+            </a>
+          </div>
+        </div>
 
         <div className="hidden items-center gap-1 md:flex">
           {navItems.map((item) => (
@@ -49,8 +61,18 @@ export const NavBar = () => {
           <NavLink
             to="/app/cart"
             aria-label="Cart"
-            className="flex h-10 w-10 items-center justify-center rounded-md border border-slate-200 text-slate-600 transition hover:border-emerald-300 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-100"
+            className={`relative flex items-center justify-center rounded-md border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-emerald-300 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-100 ${cartItems.length > 0 ? "bg-emerald-50 text-emerald-700" : ""}`}
           >
+            {cartItems.length > 0 && (
+              <span
+                className={clsx(
+                  "absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-600 text-xs text-white",
+                  cartItems.length === 0 && "hidden",
+                )}
+              >
+                {cartItems.length}
+              </span>
+            )}
             <ShoppingCart size={20} />
           </NavLink>
 

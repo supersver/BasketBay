@@ -29,7 +29,8 @@ Before you begin, ensure you have the following installed on your system:
 
 Create a `.env` file in the root of the project and add the following variables:
 
-```VITE_API_URL=https://api.escuelajs.co/api
+```
+VITE_API_URL=https://api.escuelajs.co/api
 
 ```
 
@@ -78,12 +79,21 @@ src/
 │   └── Layout/          # Layout components (navbar, main layout)
 ├── features/            # Feature-based modules
 │   ├── auth/
+│       ├── routes/      # Auth-related route components
+│       ├── hooks/       # Auth-related custom hooks
+│       ├── api/         # API calls related to authentication
+│       └── components/  # Auth-related components (login form, registration form, etc.)
 │   ├── products/
+|   ├── user/
 │   └── misc/
 ├── context/             # React context providers
 ├── lib/                 # External library configurations
 ├── providers/           # App providers
 ├── routes/              # Route definitions
+├── config/              # Configuration files
+├── routes/              # Route components
+├── utils/               # Utility functions
+├── assets/              # Static assets (images, icons, etc.)
 └── utils/               # Utility functions
 ```
 
