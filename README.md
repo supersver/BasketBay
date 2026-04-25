@@ -131,6 +131,39 @@ src/
 - **API** - [Platzi Fake Store API](https://fakeapi.platzi.com)
 - **Deployment** - Vercel
 
+## Documentation
+
+### Assumptions
+
+- The backend API (e.g., https://api.escuelajs.co/api) is always available and returns data in the expected JSON format.
+- Users will have a stable internet connection for real-time features.
+- Product data includes required fields like `id`, `title`, and `price`; missing fields may cause errors.
+- API responses are consistent and do not include unexpected data types or structures.
+
+### Limitations
+
+- The app currently supports only English; internationalization (i18n) is not implemented.
+- Cart persistence relies on localStorage, which may not work in private browsing modes.
+- E2E tests (via Cypress) cover basic flows but do not include edge cases like network failures.
+- Pagination is not implemented for product listings, which may affect performance with large datasets.
+- User authentication is basic and does not include features like password reset
+- API is third-party and used for demonstration purposes; it may have rate limits or downtime that could affect the app's functionality.
+- User profile features are limited to viewing information; editing and updating profiles are not implemented.
+- User cannot view order history or manage past orders, as this functionality is not included in the current scope of the app.
+- Cart functionality is basic and does not include features like quantity updates or checkout processes.
+
+### Additional Features
+
+- **User Authentication**: Added login/logout with JWT token storage (features/auth/), including a dropdown for user details.
+- **User Profile**: Created a user profile page to view user information (features/user/).
+- **Refresh Button**: Added a refresh button on the product listing page to manually refetch products from the API.
+- **Error Handling**: Implemented error handling for API calls with user-friendly messages.
+- **Loading States**: Added loading spinners for API calls to improve user experience.
+- **Notifications**: Integrated React Toastify for success and error notifications across the app.
+- **React Error Boundaries**: Implemented error boundaries to catch and display errors gracefully in the UI.
+- **Axios Interceptors**: Set up Axios interceptors for global error handling and request/response logging.
+- **Code Splitting**: Used React.lazy and Suspense for code splitting and lazy loading of components to improve performance.
+
 ## Contributing
 
 1. Fork the repository
