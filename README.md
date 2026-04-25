@@ -109,6 +109,7 @@ src/
 - **React Toastify** - Toast notifications
 - **Phosphor Icons** - Icon library
 - **API** - [Platzi Fake Store API](https://fakeapi.platzi.com)
+- **Deployment** - Vercel
 
 ## Contributing
 
