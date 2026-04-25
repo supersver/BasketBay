@@ -21,7 +21,7 @@ export interface Product {
 export const getProductById = async (id: number): Promise<Product> => {
   try {
     const response = await axios.get<Product>(`/v1/products/${id}`);
-    return response as unknown as Product;
+    return response?.data;
   } catch (error) {
     console.error("Error fetching product:", error);
     throw error;

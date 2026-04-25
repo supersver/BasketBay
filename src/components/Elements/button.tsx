@@ -6,6 +6,7 @@ const variants = {
   primary: "bg-blue-600 text-white",
   inverse: "bg-white text-blue-600",
   danger: "bg-red-600 text-white",
+  outline: "bg-transparent text-gray-700 border-gray-300",
 };
 
 const sizes = {

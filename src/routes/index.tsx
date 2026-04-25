@@ -1,6 +1,6 @@
 import { Outlet, useRoutes } from "react-router-dom";
 
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { AppContextProvider } from "@/context/AppContext";
 
 import { Spinner } from "phosphor-react";
@@ -43,6 +43,12 @@ export const AppRoutes = () => {
     },
     { path: "*", element: <div>404 Not Found</div> },
   ];
+
+  useEffect(() => {
+    if (storage.getAccessToken() && window.location.pathname === "/") {
+      window.location.assign("/app");
+    }
+  }, []);
 
   const routes = storage.getAccessToken() ? protectedRoutes : commonRoutes;
 

@@ -1,4 +1,4 @@
-import { ShoppingCartSimple, Star } from "phosphor-react";
+import { ShoppingCartSimple } from "phosphor-react";
 import { useMemo, useState } from "react";
 
 import type { Product } from "../api/getProducts";
@@ -25,8 +25,15 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   const imageUrl = useMemo(() => getProductImage(product), [product]);
   const shouldShowImage = Boolean(imageUrl && !imageFailed);
 
+  const navigateToProductDetail = () => {
+    window.location.href = `/app/products/${product.id}`;
+  };
+
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+    <article
+      onClick={() => navigateToProductDetail()}
+      className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+    >
       <div className="relative aspect-square overflow-hidden bg-slate-100">
         {shouldShowImage ? (
           <img
@@ -64,6 +71,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           </span>
           <button
             type="button"
+            onClick={(e) => e.stopPropagation()}
             className="flex h-10 shrink-0 items-center gap-2 rounded-md bg-slate-950 px-3 text-sm font-semibold text-white transition hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-100"
           >
             <ShoppingCartSimple size={18} />

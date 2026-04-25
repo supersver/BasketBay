@@ -7,6 +7,7 @@ function App({ children }: { children?: React.ReactNode }) {
   if (children) {
     return <>{children}</>;
   }
+
   return (
     <StrictMode>
       <AppProvider>

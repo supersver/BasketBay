@@ -1,14 +1,13 @@
 import clsx from "clsx";
 import {
-  Heart,
   List,
   MagnifyingGlass,
   Package,
   ShoppingCart,
   X,
 } from "phosphor-react";
-import { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 import { UserDropdown } from "./UserDropdown";
 
@@ -22,29 +21,8 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
       : "text-slate-600 hover:bg-slate-100 hover:text-slate-950",
   );
 
-const SearchBox = ({ className = "" }: { className?: string }) => {
-  return (
-    <label className={`relative block ${className}`}>
-      <MagnifyingGlass
-        size={18}
-        className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-      />
-      <input
-        type="search"
-        placeholder="Search products"
-        className="h-10 w-full rounded-md border border-slate-200 bg-slate-50 pl-10 pr-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-100"
-      />
-    </label>
-  );
-};
-
 export const NavBar = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation();
-
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [location.pathname]);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
@@ -73,8 +51,6 @@ export const NavBar = () => {
           ))}
         </div>
 
-        <SearchBox className="hidden max-w-md mx-auto flex-1 lg:block" />
-
         <div className="ml-auto flex items-center gap-2">
           <NavLink
             to="/app/cart"
@@ -101,8 +77,6 @@ export const NavBar = () => {
       {isMobileMenuOpen && (
         <div className="border-t border-slate-200 bg-white md:hidden">
           <div className="mx-auto max-w-7xl space-y-3 px-4 py-4 sm:px-6">
-            <SearchBox />
-
             <div className="grid gap-1">
               {navItems.map((item) => (
                 <NavLink

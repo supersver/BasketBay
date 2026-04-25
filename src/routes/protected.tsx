@@ -4,6 +4,12 @@ import { Outlet } from "react-router-dom";
 import { Spinner } from "phosphor-react";
 import { MainLayout } from "@/components/Layout/MainLayout";
 import { Products } from "@/features/products";
+import { lazyImport } from "@/utils/lazyImport";
+
+const { ProductDetail } = lazyImport(
+  () => import("@/features/products/routes/ProductDetail"),
+  "ProductDetail",
+);
 
 const ProductsPage = () => {
   return (
@@ -21,6 +27,10 @@ const ProductsPage = () => {
   );
 };
 
+const ProductDetailPage = () => {
+  return <ProductDetail />;
+};
+
 export const protectedRoutes = [
   {
     path: "/app",
@@ -28,6 +38,7 @@ export const protectedRoutes = [
     children: [
       { index: true, element: <Products /> },
       { path: "products", element: <Products /> },
+      { path: "products/:id", element: <ProductDetailPage /> },
       { path: "*", element: <div>404 Not Found</div> },
     ],
   },
