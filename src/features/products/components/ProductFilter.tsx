@@ -97,7 +97,7 @@ export const ProductFilter = ({
               <select
                 value={sortBy}
                 onChange={handleSortChange}
-                className="h-10 min-w-[13rem] rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
+                className="h-10 min-w-52 rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
               >
                 {sortOptions.map((option) => (
                   <option key={option.value} value={option.value}>
