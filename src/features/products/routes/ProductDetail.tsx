@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useGetProductById } from "../api/getProductById";
-import { ArrowLeft, Spinner } from "phosphor-react";
+import { ArrowLeft, ShoppingCartSimple, Spinner } from "phosphor-react";
 import { Button } from "@/components/Elements";
 
 export const ProductDetail = () => {
@@ -19,7 +19,7 @@ export const ProductDetail = () => {
     error && <p>Error loading product: {error.message}</p>;
   }
   return (
-    <div className="p-4">
+    <div>
       <Button
         onClick={() => window.history.back()}
         className="mb-4"
@@ -29,7 +29,7 @@ export const ProductDetail = () => {
         Back
       </Button>
       {product && (
-        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="lg:flex p-4 mx-auto bg-white rounded-lg shadow-md overflow-hidden">
           {product.images && product.images.length > 0 && (
             <img
               src={product.images[0]}
@@ -40,9 +40,19 @@ export const ProductDetail = () => {
           <div className="p-4">
             <h1 className="text-2xl font-bold mb-2">{product.title}</h1>
             <p className="text-gray-700 mb-4">{product.description}</p>
-            <span className="text-xl font-semibold text-gray-900">
-              ${product.price.toFixed(2)}
-            </span>
+            <div className="mt-auto flex items-center justify-between gap-3 pt-4">
+              <span className="text-lg font-bold text-slate-950">
+                ${product.price.toFixed(2)}
+              </span>
+              <button
+                type="button"
+                onClick={(e) => e.stopPropagation()}
+                className="flex h-10 shrink-0 items-center gap-2 rounded-md bg-slate-950 px-3 text-sm font-semibold text-white transition hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-100"
+              >
+                <ShoppingCartSimple size={18} />
+                <span className="hidden sm:inline">Add</span>
+              </button>
+            </div>
           </div>
         </div>
       )}

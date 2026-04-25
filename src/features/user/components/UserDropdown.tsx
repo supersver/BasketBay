@@ -1,8 +1,4 @@
-import {
-  CaretDown,
-  SignOut,
-  UserCircle,
-} from "phosphor-react";
+import { CaretDown, SignOut, UserCircle } from "phosphor-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -91,7 +87,7 @@ const decodeJwtPayload = (): UserCandidate => {
 };
 
 const getInitials = (name: string, email?: string): string => {
-  const source = name !== "BasketBay User" ? name : email ?? name;
+  const source = name !== "BasketBay User" ? name : (email ?? name);
   const words = source
     .replace(/@.*/, "")
     .split(/[\s._-]+/)
@@ -222,9 +218,9 @@ export const UserDropdown = ({ user, className = "" }: UserDropdownProps) => {
   };
 
   const handleSignOut = () => {
-    storage.clear();
+    storage.removeAccessToken();
     setIsOpen(false);
-    window.location.assign("/auth/login");
+    window.location.assign("/");
   };
 
   return (

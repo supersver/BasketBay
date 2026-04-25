@@ -6,7 +6,7 @@ export const LandingPage = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="h-screen w-full flex flex-col items-center justify-center">
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-green-600">
+        <h1 className="text-4xl font-bold text-emerald-600">
           Welcome to BasketBay 🛒
         </h1>
         <p className="mt-4 text-lg text-gray-600">
@@ -19,7 +19,7 @@ export const LandingPage = ({ children }: { children: React.ReactNode }) => {
         className="mt-6"
         onClick={() => naviate("/auth/login")}
       >
-        Log In
+        Continue
       </Button>
       {children}
     </div>

@@ -11,6 +11,8 @@ const { ProductDetail } = lazyImport(
   "ProductDetail",
 );
 
+const { Profile } = lazyImport(() => import("@/features/user"), "Profile");
+
 const ProductsPage = () => {
   return (
     <MainLayout>
@@ -31,6 +33,10 @@ const ProductDetailPage = () => {
   return <ProductDetail />;
 };
 
+const UserProfilePage = () => {
+  return <Profile />;
+};
+
 export const protectedRoutes = [
   {
     path: "/app",
@@ -39,6 +45,7 @@ export const protectedRoutes = [
       { index: true, element: <Products /> },
       { path: "products", element: <Products /> },
       { path: "products/:id", element: <ProductDetailPage /> },
+      { path: "profile", element: <UserProfilePage /> },
       { path: "*", element: <div>404 Not Found</div> },
     ],
   },

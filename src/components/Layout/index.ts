@@ -1,2 +1,2 @@
 export * from "./NavBar";
-export * from "./UserDropdown";
+export * from "../../features/user/components/UserDropdown";

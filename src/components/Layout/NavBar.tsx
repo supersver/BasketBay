@@ -1,15 +1,9 @@
 import clsx from "clsx";
-import {
-  List,
-  MagnifyingGlass,
-  Package,
-  ShoppingCart,
-  X,
-} from "phosphor-react";
+import { List, Package, ShoppingCart, X } from "phosphor-react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-import { UserDropdown } from "./UserDropdown";
+import { UserDropdown } from "../../features/user";
 
 const navItems = [{ label: "Shop", to: "/app" }];
 

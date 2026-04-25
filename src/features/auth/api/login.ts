@@ -2,7 +2,6 @@ import { useMutation } from "@tanstack/react-query";
 import { axios } from "@/lib/axios";
 import { toast } from "react-toastify";
 import { API_URL } from "@/config";
-import storage from "@/utils/storage";
 
 export const login = async ({
   email,
@@ -16,7 +15,8 @@ export const login = async ({
       email,
       password,
     });
-    return res;
+
+    return res?.data;
   } catch (error: any) {
     console.error("Login error:", error);
   }
@@ -38,9 +38,6 @@ export const useLogin = (config = {}) => {
     onSuccess: (data) => {
       if (data) {
         toast.success("Login successful!");
-        storage.setAccessToken(data?.access_token);
-
-        window.location.assign("/app");
       }
     },
     ...config,

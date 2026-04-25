@@ -1,6 +1,7 @@
 import { Button } from "@/components/Elements";
 import React, { useState } from "react";
 import { useLogin } from "../api/login";
+import storage from "@/utils/storage";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -21,8 +22,10 @@ const LoginForm: React.FC = () => {
     loginMutation.mutate(
       { email, password },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
           setIsLoading(false);
+          storage.setAccessToken(data?.access_token);
+          window.location.assign("/app");
         },
         onError: (error) => {
           console.error("Login failed:", error);
@@ -104,6 +107,7 @@ const LoginForm: React.FC = () => {
         New to BasketBay?{" "}
         <button
           type="button"
+          disabled={true}
           className="font-medium text-emerald-600 transition hover:text-emerald-500"
         >
           Create an account
