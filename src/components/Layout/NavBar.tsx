@@ -114,16 +114,6 @@ export const NavBar = () => {
                 </NavLink>
               ))}
             </div>
-
-            <div className="grid grid-cols-2 gap-2 pt-2">
-              <NavLink
-                to="/app/orders"
-                className="flex items-center justify-center gap-2 rounded-md border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-emerald-300 hover:text-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-100"
-              >
-                <Package size={18} />
-                <span>Orders</span>
-              </NavLink>
-            </div>
           </div>
         </div>
       )}
