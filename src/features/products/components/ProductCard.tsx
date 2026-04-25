@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 
 import type { Product } from "../api/getProducts";
 import { useStoreCartItem } from "../hooks/useStoreCartItem";
+import { toast } from "react-toastify";
 
 type ProductCardProps = {
   product: Product;
@@ -37,6 +38,7 @@ export const ProductCard = ({ product, isInCart }: ProductCardProps) => {
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
     addToCart(product);
+    toast.success("Item added to cart");
   };
 
   return (
