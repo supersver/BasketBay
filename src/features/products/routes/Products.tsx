@@ -8,6 +8,7 @@ import { useGetProducts } from "../api/getProducts";
 import { Tooltip } from "@/components/Elements";
 import type { Product } from "../api/getProducts";
 import type { CategoryOption, ProductSortOption } from "../components";
+import { useAppContext } from "@/context/AppContext";
 
 const getUniqueCategories = (products: Product[]): CategoryOption[] => {
   const categoriesById = new Map<number, CategoryOption>();
@@ -69,6 +70,8 @@ export const Products = () => {
     getFiltersFromURL(searchParams),
   );
 
+  const { cartItems } = useAppContext();
+
   useEffect(() => {
     const filters = getFiltersFromURL(searchParams);
     setDraftFilters(filters);
@@ -100,6 +103,10 @@ export const Products = () => {
     () => sortProducts(products, appliedFilters.sortBy),
     [products, appliedFilters.sortBy],
   );
+
+  const isProductInCart = (productId: number) => {
+    return cartItems.some((item) => item.id === productId);
+  };
 
   const hasUnappliedChanges =
     JSON.stringify(draftFilters) !== JSON.stringify(appliedFilters);
@@ -202,7 +209,11 @@ export const Products = () => {
       ) : sortedProducts.length > 0 ? (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {sortedProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              isInCart={isProductInCart(product.id)}
+            />
           ))}
         </div>
       ) : (

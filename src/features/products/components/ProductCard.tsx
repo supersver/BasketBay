@@ -6,6 +6,7 @@ import { useStoreCartItem } from "../hooks/useStoreCartItem";
 
 type ProductCardProps = {
   product: Product;
+  isInCart: boolean;
 };
 
 const formatPrice = (price: number) => {
@@ -21,7 +22,7 @@ const getProductImage = (product: Product): string | undefined => {
   );
 };
 
-export const ProductCard = ({ product }: ProductCardProps) => {
+export const ProductCard = ({ product, isInCart }: ProductCardProps) => {
   const [imageFailed, setImageFailed] = useState<boolean>(false);
 
   const { addToCart } = useStoreCartItem();
@@ -78,14 +79,22 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           <span className="text-lg font-bold text-slate-950">
             {formatPrice(product.price)}
           </span>
-          <button
-            type="button"
-            onClick={(e) => handleAddToCart(e)}
-            className="flex h-10 shrink-0 cursor-pointer items-center gap-2 rounded-md bg-slate-950 px-3 text-sm font-semibold text-white transition hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-100"
-          >
-            <ShoppingCartSimple size={18} />
-            <span className="hidden sm:inline">Add</span>
-          </button>
+
+          {isInCart ? (
+            <span className="flex h-10 shrink-0 cursor-not-allowed items-center gap-2 rounded-md bg-gray-300 px-3 text-sm font-semibold text-gray-600">
+              <ShoppingCartSimple size={18} />
+              <span className="hidden sm:inline">In Cart</span>
+            </span>
+          ) : (
+            <button
+              type="button"
+              onClick={(e) => handleAddToCart(e)}
+              className="flex h-10 shrink-0 cursor-pointer items-center gap-2 rounded-md bg-slate-950 px-3 text-sm font-semibold text-white transition hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-100"
+            >
+              <ShoppingCartSimple size={18} />
+              <span className="hidden sm:inline">Add</span>
+            </button>
+          )}
         </div>
       </div>
     </div>
