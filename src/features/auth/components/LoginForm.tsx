@@ -48,9 +48,9 @@ const LoginForm: React.FC = () => {
         <p className="text-sm font-medium uppercase tracking-[0.2em] text-emerald-600">
           BasketBay
         </p>
-        <h2 className="text-3xl font-semibold text-slate-900">Welcome back</h2>
+        <h2 className="text-3xl font-semibold text-slate-900">Welcome!</h2>
         <p className="text-sm text-slate-500">
-          Sign in to continue managing your account.
+          Sign in to your account to continue to the demo shop.
         </p>
       </div>
 

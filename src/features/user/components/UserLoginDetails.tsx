@@ -1,9 +1,12 @@
 import { Button } from "@/components/Elements";
-import { Copy } from "phosphor-react";
+import { Copy, CaretDown, CaretUp } from "phosphor-react";
 import { toast } from "react-toastify";
 import { useGetUsersLoginCredentials } from "../api/getUsersLoginCredentials";
+import { useState } from "react";
 
 export const UserLoginDetails = () => {
+  const [isAccordionOpen, setIsAccordionOpen] = useState<boolean>(false);
+
   const {
     data: userCredentials,
     isLoading,
@@ -37,10 +40,25 @@ export const UserLoginDetails = () => {
   }
 
   return (
-    <div className="w-full max-w-lg p-5 rounded-xl shadow-sm border-slate-200 bg-white">
-      <h2 className="text-2xl font-bold mb-4">Demo Login Accounts</h2>
+    <div className="w-full max-w-md rounded-xl shadow-sm border border-slate-200 bg-white">
+      <button
+        onClick={() => setIsAccordionOpen(!isAccordionOpen)}
+        className="w-full flex items-center justify-between p-5 text-left"
+      >
+        <h2 className="text-xl font-bold">Demo Login Accounts</h2>
+        {isAccordionOpen ? (
+          <CaretUp size={22} className="text-gray-600" />
+        ) : (
+          <CaretDown size={22} className="text-gray-600" />
+        )}
+      </button>
 
-      <div className="space-y-4">
+      <div
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+          isAccordionOpen ? "max-h-250 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        {" "}
         {userCredentials?.map((user) => (
           <div key={user.id} className="rounded-lg p-4 bg-gray-50 shadow-sm">
             <div className="flex items-center gap-3 mb-3">

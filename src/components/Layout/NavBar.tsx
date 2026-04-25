@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { List, Package, ShoppingCart, X } from "phosphor-react";
+import { List, ShoppingCart, X } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
