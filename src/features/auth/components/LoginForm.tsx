@@ -14,7 +14,7 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic here
+    // Handle login logic
     console.log("Login attempt:", { email, password });
     if (email.trim() === "" || password.trim() === "") {
       return;

@@ -1,25 +1,13 @@
 import { CaretDown, SignOut, UserCircle } from "phosphor-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import storage from "@/utils/storage";
+import { toast } from "react-toastify";
 
 type UserCandidate = {
   name?: string;
-  fullName?: string;
-  firstName?: string;
-  lastName?: string;
-  username?: string;
   email?: string;
-  image?: string;
-  imageUrl?: string;
   avatar?: string;
-  avatarUrl?: string;
-  picture?: string;
-  photoURL?: string;
-  photoUrl?: string;
-  profileImage?: string;
-  initials?: string;
 };
 
 type UserDropdownProps = {
@@ -34,56 +22,8 @@ type UserProfile = {
   initials: string;
 };
 
-const asUserCandidate = (value: unknown): UserCandidate => {
-  if (!value || typeof value !== "object") {
-    return {};
-  }
-
-  return value as UserCandidate;
-};
-
 const getText = (...values: Array<string | undefined>): string | undefined => {
   return values.find((value) => value?.trim())?.trim();
-};
-
-const readStoredUser = (): UserCandidate => {
-  const storedUser =
-    storage.getItem("user") ??
-    storage.getItem("currentUser") ??
-    storage.getItem("profile");
-
-  if (!storedUser) {
-    return {};
-  }
-
-  try {
-    return asUserCandidate(JSON.parse(storedUser));
-  } catch {
-    return {};
-  }
-};
-
-const decodeJwtPayload = (): UserCandidate => {
-  const token = storage.getAccessToken();
-  const payload = token?.split(".")[1];
-
-  if (!payload) {
-    return {};
-  }
-
-  try {
-    const normalized = payload.replace(/-/g, "+").replace(/_/g, "/");
-    const padded = normalized.padEnd(
-      normalized.length + ((4 - (normalized.length % 4)) % 4),
-      "=",
-    );
-    const decoded = window.atob(padded);
-    const bytes = Uint8Array.from(decoded, (char) => char.charCodeAt(0));
-
-    return asUserCandidate(JSON.parse(new TextDecoder().decode(bytes)));
-  } catch {
-    return {};
-  }
 };
 
 const getInitials = (name: string, email?: string): string => {
@@ -105,63 +45,11 @@ const getInitials = (name: string, email?: string): string => {
 };
 
 const buildProfile = (providedUser?: UserCandidate): UserProfile => {
-  const storedUser = readStoredUser();
-  const tokenUser = decodeJwtPayload();
-  const firstName = getText(
-    providedUser?.firstName,
-    storedUser.firstName,
-    tokenUser.firstName,
-  );
-  const lastName = getText(
-    providedUser?.lastName,
-    storedUser.lastName,
-    tokenUser.lastName,
-  );
-  const composedName = getText([firstName, lastName].filter(Boolean).join(" "));
-  const email = getText(providedUser?.email, storedUser.email, tokenUser.email);
+  const email = getText(providedUser?.email);
   const name =
-    getText(
-      providedUser?.name,
-      providedUser?.fullName,
-      composedName,
-      storedUser.name,
-      storedUser.fullName,
-      tokenUser.name,
-      tokenUser.fullName,
-      providedUser?.username,
-      storedUser.username,
-      tokenUser.username,
-      email?.split("@")[0],
-    ) ?? "BasketBay User";
-  const imageUrl = getText(
-    providedUser?.imageUrl,
-    providedUser?.avatarUrl,
-    providedUser?.avatar,
-    providedUser?.image,
-    providedUser?.picture,
-    providedUser?.photoURL,
-    providedUser?.photoUrl,
-    providedUser?.profileImage,
-    storedUser.imageUrl,
-    storedUser.avatarUrl,
-    storedUser.avatar,
-    storedUser.image,
-    storedUser.picture,
-    storedUser.photoURL,
-    storedUser.photoUrl,
-    storedUser.profileImage,
-    tokenUser.imageUrl,
-    tokenUser.avatarUrl,
-    tokenUser.avatar,
-    tokenUser.image,
-    tokenUser.picture,
-    tokenUser.photoURL,
-    tokenUser.photoUrl,
-    tokenUser.profileImage,
-  );
-  const initials =
-    getText(providedUser?.initials, storedUser.initials, tokenUser.initials) ??
-    getInitials(name, email);
+    getText(providedUser?.name, email?.split("@")[0]) ?? "BasketBay User";
+  const imageUrl = getText(providedUser?.avatar);
+  const initials = getInitials(name, email);
 
   return {
     name,
@@ -220,6 +108,7 @@ export const UserDropdown = ({ user, className = "" }: UserDropdownProps) => {
   const handleSignOut = () => {
     storage.removeAccessToken();
     setIsOpen(false);
+    toast.success("You have been signed out.");
     window.location.assign("/");
   };
 

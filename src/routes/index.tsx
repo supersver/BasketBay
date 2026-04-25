@@ -55,6 +55,11 @@ export const AppRoutes = () => {
   useEffect(() => {
     if (storage.getAccessToken() && window.location.pathname === "/") {
       window.location.assign("/app");
+    } else if (
+      !storage.getAccessToken() &&
+      window.location.pathname.startsWith("/app")
+    ) {
+      window.location.assign("/");
     }
   }, []);
 

@@ -1,10 +1,11 @@
 import clsx from "clsx";
 import { List, Package, ShoppingCart, X } from "phosphor-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import { UserDropdown } from "../../features/user";
 import { useAppContext } from "@/context/AppContext";
+import { useGetUserProfile } from "@/features/user/api/getUserProfile";
 
 const navItems = [{ label: "Shop", to: "/app" }];
 
@@ -19,7 +20,15 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
 export const NavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
-  const { cartItems } = useAppContext();
+  const { data: userProfile } = useGetUserProfile();
+
+  const { cartItems, setUserDetails } = useAppContext();
+
+  useEffect(() => {
+    if (userProfile) {
+      setUserDetails?.(userProfile);
+    }
+  }, [userProfile, setUserDetails]);
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
@@ -76,7 +85,7 @@ export const NavBar = () => {
             <ShoppingCart size={20} />
           </NavLink>
 
-          <UserDropdown />
+          <UserDropdown user={userProfile} />
 
           <button
             type="button"

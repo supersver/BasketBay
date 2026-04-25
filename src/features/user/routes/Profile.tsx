@@ -1,16 +1,7 @@
-import { toast } from "react-toastify";
-import { useGetUserProfile } from "../api/getUserProfile";
+import { useAppContext } from "@/context/AppContext";
 
 export const Profile = () => {
-  const { data: userProfile, error, isLoading } = useGetUserProfile();
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return toast.error("Error fetching user profile");
-  }
+  const { userDetails: userProfile } = useAppContext();
 
   return (
     <div className="lg:flex p-4 mx-auto bg-white rounded-lg shadow-md overflow-hidden">

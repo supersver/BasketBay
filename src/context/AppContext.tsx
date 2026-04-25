@@ -9,6 +9,8 @@ import {
 interface AppContextType {
   cartItems: any[];
   setCartItems: React.Dispatch<React.SetStateAction<any[]>>;
+  userDetails?: any;
+  setUserDetails?: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -21,6 +23,7 @@ export const AppContextProvider: React.FC<AppContextProviderProps> = ({
   children,
 }) => {
   const [cartItems, setCartItems] = useState<any[]>([]);
+  const [userDetails, setUserDetails] = useState<any>(null);
 
   useEffect(() => {
     const storedCartItems = localStorage.getItem("cartItems");
@@ -38,6 +41,8 @@ export const AppContextProvider: React.FC<AppContextProviderProps> = ({
       value={{
         cartItems,
         setCartItems,
+        userDetails,
+        setUserDetails,
       }}
     >
       {children}
