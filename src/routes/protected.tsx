@@ -1,19 +1,11 @@
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
-
 import { SmileyXEyes, Spinner } from "phosphor-react";
+
 import { MainLayout } from "@/components/Layout/MainLayout";
 import { Products } from "@/features/products";
-import { lazyImport } from "@/utils/lazyImport";
-
-const { ProductDetail } = lazyImport(
-  () => import("@/features/products"),
-  "ProductDetail",
-);
-
-const { Profile } = lazyImport(() => import("@/features/user"), "Profile");
-
-const { Cart } = lazyImport(() => import("@/features/products"), "Cart");
+import { Profile } from "@/features/user";
+import { Cart, ProductDetail } from "@/features/products";
 
 const ProductsPage = () => {
   return (
