@@ -70,6 +70,26 @@ To run ESLint and check for code quality issues:
 npm run lint
 ```
 
+### Cypress Page Tests
+
+Start the Vite dev server first:
+
+```bash
+npm run dev
+```
+
+Then run the Cypress end-to-end tests in another terminal:
+
+```bash
+npm run test:e2e
+```
+
+To use the interactive Cypress runner:
+
+```bash
+npm run cypress:open
+```
+
 ## Project Structure
 
 ```
