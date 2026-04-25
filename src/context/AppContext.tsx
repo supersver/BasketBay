@@ -1,7 +1,15 @@
-import { createContext, useContext, type ReactNode } from "react";
+import storage from "@/utils/storage";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 
 interface AppContextType {
-  // Define your context values here
+  cartItems: any[];
+  setCartItems: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -13,13 +21,25 @@ interface AppContextProviderProps {
 export const AppContextProvider: React.FC<AppContextProviderProps> = ({
   children,
 }) => {
+  const [cartItems, setCartItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    const storedCartItems = localStorage.getItem("cartItems");
+    if (storedCartItems) {
+      setCartItems(JSON.parse(storedCartItems));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
+
   return (
     <AppContext.Provider
-      value={
-        {
-          /* Provide your context values here */
-        }
-      }
+      value={{
+        cartItems,
+        setCartItems,
+      }}
     >
       {children}
     </AppContext.Provider>

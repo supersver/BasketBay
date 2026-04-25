@@ -2,6 +2,7 @@ import { ShoppingCartSimple } from "phosphor-react";
 import { useMemo, useState } from "react";
 
 import type { Product } from "../api/getProducts";
+import { useStoreCartItem } from "../hooks/useStoreCartItem";
 
 type ProductCardProps = {
   product: Product;
@@ -21,7 +22,10 @@ const getProductImage = (product: Product): string | undefined => {
 };
 
 export const ProductCard = ({ product }: ProductCardProps) => {
-  const [imageFailed, setImageFailed] = useState(false);
+  const [imageFailed, setImageFailed] = useState<boolean>(false);
+
+  const { addToCart } = useStoreCartItem();
+
   const imageUrl = useMemo(() => getProductImage(product), [product]);
   const shouldShowImage = Boolean(imageUrl && !imageFailed);
 
@@ -29,8 +33,13 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     window.location.href = `/app/products/${product.id}`;
   };
 
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    addToCart(product);
+  };
+
   return (
-    <article
+    <div
       onClick={() => navigateToProductDetail()}
       className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
     >
@@ -71,14 +80,14 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           </span>
           <button
             type="button"
-            onClick={(e) => e.stopPropagation()}
-            className="flex h-10 shrink-0 items-center gap-2 rounded-md bg-slate-950 px-3 text-sm font-semibold text-white transition hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-100"
+            onClick={(e) => handleAddToCart(e)}
+            className="flex h-10 shrink-0 cursor-pointer items-center gap-2 rounded-md bg-slate-950 px-3 text-sm font-semibold text-white transition hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-100"
           >
             <ShoppingCartSimple size={18} />
             <span className="hidden sm:inline">Add</span>
           </button>
         </div>
       </div>
-    </article>
+    </div>
   );
 };

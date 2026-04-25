@@ -7,11 +7,13 @@ import { Products } from "@/features/products";
 import { lazyImport } from "@/utils/lazyImport";
 
 const { ProductDetail } = lazyImport(
-  () => import("@/features/products/routes/ProductDetail"),
+  () => import("@/features/products"),
   "ProductDetail",
 );
 
 const { Profile } = lazyImport(() => import("@/features/user"), "Profile");
+
+const { Cart } = lazyImport(() => import("@/features/products"), "Cart");
 
 const ProductsPage = () => {
   return (
@@ -46,6 +48,7 @@ export const protectedRoutes = [
       { path: "products", element: <Products /> },
       { path: "products/:id", element: <ProductDetailPage /> },
       { path: "profile", element: <UserProfilePage /> },
+      { path: "cart", element: <Cart /> },
       { path: "*", element: <div>404 Not Found</div> },
     ],
   },
