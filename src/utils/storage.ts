@@ -1,6 +1,15 @@
 const storagePrefix = "basketbay_";
 
 const storage = {
+  getRedrictPath: (): string | null => {
+    return localStorage.getItem(`${storagePrefix}redirectPath`);
+  },
+  setRedirectPath: (path: string) => {
+    localStorage.setItem(`${storagePrefix}redirectPath`, path);
+  },
+  clearRedirectPath: () => {
+    localStorage.removeItem(`${storagePrefix}redirectPath`);
+  },
   getAccessToken: (): string | null => {
     return localStorage.getItem(`${storagePrefix}accessToken`);
   },

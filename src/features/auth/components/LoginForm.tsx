@@ -25,7 +25,13 @@ const LoginForm: React.FC = () => {
         onSuccess: (data) => {
           setIsLoading(false);
           storage.setAccessToken(data?.access_token);
-          window.location.assign("/app");
+          if (storage.getRedrictPath()) {
+            const redirectPath = storage.getRedrictPath() as string;
+            storage.setRedirectPath("");
+            window.location.assign(redirectPath);
+          } else {
+            window.location.assign("/app");
+          }
         },
         onError: (error) => {
           console.error("Login failed:", error);

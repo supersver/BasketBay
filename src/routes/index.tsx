@@ -53,13 +53,35 @@ export const AppRoutes = () => {
   ];
 
   useEffect(() => {
-    if (storage.getAccessToken() && window.location.pathname === "/") {
+    const accessToken = storage.getAccessToken();
+    const { pathname, search } = window.location;
+    const fullPath = `${pathname}${search}`;
+
+    if (accessToken && pathname === "/") {
+      // Already logged in → go to app
       window.location.assign("/app");
-    } else if (
-      !storage.getAccessToken() &&
-      window.location.pathname.startsWith("/app")
-    ) {
+    } else if (!accessToken && pathname.startsWith("/app")) {
+      // Not logged in but trying to access shared/private app route
+      storage.setRedirectPath(fullPath);
+
+      // Redirect to login page
       window.location.assign("/");
+    }
+  }, []);
+
+  useEffect(() => {
+    const accessToken = storage.getAccessToken();
+    const { pathname, search } = window.location;
+    const fullPath = `${pathname}${search}`;
+
+    if (accessToken && pathname === "/") {
+      window.location.assign("/app");
+    } else if (!accessToken && pathname.startsWith("/app")) {
+      storage.setRedirectPath(fullPath);
+
+      window.location.assign("/");
+    } else if (accessToken && pathname.startsWith("/app")) {
+      storage.clearRedirectPath();
     }
   }, []);
 

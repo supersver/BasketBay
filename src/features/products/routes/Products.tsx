@@ -9,6 +9,7 @@ import { Tooltip } from "@/components/Elements";
 import type { Product } from "../api/getProducts";
 import type { CategoryOption, ProductSortOption } from "../components";
 import { useAppContext } from "@/context/AppContext";
+import storage from "@/utils/storage";
 
 const getUniqueCategories = (products: Product[]): CategoryOption[] => {
   const categoriesById = new Map<number, CategoryOption>();
@@ -137,6 +138,7 @@ export const Products = () => {
     setDraftFilters(defaultFilters);
     setAppliedFilters(defaultFilters);
     setSearchParams(new URLSearchParams());
+    storage.clearRedirectPath();
   };
 
   if (isError) {
