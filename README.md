@@ -162,7 +162,7 @@ src/
 - **Notifications**: Integrated React Toastify for success and error notifications across the app.
 - **React Error Boundaries**: Implemented error boundaries to catch and display errors gracefully in the UI.
 - **Axios Interceptors**: Set up Axios interceptors for global error handling and request/response logging.
-- **Code Splitting**: Used React.lazy and Suspense for code splitting and lazy loading of components to improve performance.
+- **Code Splitting**: Used Suspense for code splitting and lazy loading of components to improve performance.
 
 ## Contributing
 
