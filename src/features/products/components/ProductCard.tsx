@@ -37,7 +37,7 @@ export const ProductCard = ({ product, isInCart }: ProductCardProps) => {
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
-    addToCart(product);
+    addToCart({ ...product, quantity: +1 });
     toast.success("Item added to cart");
   };
 

@@ -10,23 +10,7 @@ import type { Product } from "../api/getProducts";
 import type { CategoryOption, ProductSortOption } from "../components";
 import { useAppContext } from "@/context/AppContext";
 import storage from "@/utils/storage";
-
-const getUniqueCategories = (products: Product[]): CategoryOption[] => {
-  const categoriesById = new Map<number, CategoryOption>();
-
-  products.forEach((product) => {
-    if (product.category?.id && product.category.name) {
-      categoriesById.set(product.category.id, {
-        id: product.category.id,
-        name: product.category.name,
-      });
-    }
-  });
-
-  return Array.from(categoriesById.values()).sort((a, b) =>
-    a.name.localeCompare(b.name),
-  );
-};
+import { useGetCategories } from "../api/getCategories";
 
 const sortProducts = (products: Product[], sortBy: ProductSortOption) => {
   const sorted = [...products];
@@ -79,7 +63,9 @@ export const Products = () => {
     setAppliedFilters(filters);
   }, [searchParams]);
 
-  const { data: allProducts = [] } = useGetProducts({ limit: 100 });
+  // const { data: allProducts = [] } = useGetProducts({ limit: 100 });
+  const { data: allCategrories = [] } = useGetCategories({ limit: 100 });
+
   const {
     data: products = [],
     isError,
@@ -96,14 +82,18 @@ export const Products = () => {
       toast.error("Failed to fetch products. Please try again later.");
   }, [isError]);
 
-  const categories = useMemo(
-    () => getUniqueCategories(allProducts),
-    [allProducts],
-  );
   const sortedProducts = useMemo(
     () => sortProducts(products, appliedFilters.sortBy),
     [products, appliedFilters.sortBy],
   );
+
+  const allCategories = useMemo(() => {
+    const categoryMap: Record<number, CategoryOption> = {};
+    allCategrories.forEach((cat: any) => {
+      categoryMap[cat.id] = { id: cat.id, name: cat.name };
+    });
+    return Object.values(categoryMap);
+  }, [allCategrories]);
 
   const isProductInCart = (productId: number) => {
     return cartItems.some((item) => item.id === productId);
@@ -192,7 +182,7 @@ export const Products = () => {
       </div>
 
       <ProductFilter
-        categories={categories}
+        categories={allCategories}
         selectedCategoryIds={draftFilters.categoryIds}
         sortBy={draftFilters.sortBy}
         onCategoryToggle={handleCategoryToggle}
@@ -203,7 +193,6 @@ export const Products = () => {
         onApply={handleApplyFilters}
         hasUnappliedChanges={hasUnappliedChanges}
       />
-
       {isLoading || isRefetching ? (
         <div className="flex min-h-80 items-center justify-center">
           <Spinner size={36} className="animate-spin text-emerald-600" />
