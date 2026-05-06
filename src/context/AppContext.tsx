@@ -7,8 +7,24 @@ import {
 } from "react";
 
 interface AppContextType {
-  cartItems: any[];
-  setCartItems: React.Dispatch<React.SetStateAction<any[]>>;
+  cartItems: {
+    id: number;
+    title: string;
+    price: number;
+    quantity: number;
+    images?: string[];
+  }[];
+  setCartItems: React.Dispatch<
+    React.SetStateAction<
+      {
+        id: number;
+        title: string;
+        price: number;
+        quantity: number;
+        images?: string[] | undefined;
+      }[]
+    >
+  >;
   userDetails?: any;
   setUserDetails?: React.Dispatch<React.SetStateAction<any>>;
 }
@@ -22,7 +38,15 @@ interface AppContextProviderProps {
 export const AppContextProvider: React.FC<AppContextProviderProps> = ({
   children,
 }) => {
-  const [cartItems, setCartItems] = useState<any[]>([]);
+  const [cartItems, setCartItems] = useState<
+    {
+      id: number;
+      title: string;
+      price: number;
+      quantity: number;
+      images?: string[] | undefined;
+    }[]
+  >([]);
   const [userDetails, setUserDetails] = useState<any>(null);
 
   useEffect(() => {
