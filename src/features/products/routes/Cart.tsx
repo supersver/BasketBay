@@ -3,7 +3,6 @@ import { useStoreCartItem } from "../hooks/useStoreCartItem";
 import { Button } from "@/components/Elements";
 import { ArrowLeft, Minus, Plus, Trash } from "phosphor-react";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
 
 export const Cart = () => {
   const { cartItems, setCartItems } = useAppContext();
